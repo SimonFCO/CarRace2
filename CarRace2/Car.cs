@@ -37,7 +37,7 @@ namespace CarRace2
         public void Drive()
         {
             Update();
-            if (Stopped != true)
+            if (!Stopped)
             {
                 DistanceDriven += Speed * 1000 / 3600;
             }

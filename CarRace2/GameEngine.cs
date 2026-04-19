@@ -12,7 +12,7 @@ namespace CarRace2
         public static List<Thread> threads = new List<Thread>();
         public static List<Car> carList = new List<Car>();
         public static bool raceOn = true;
-        private const int WinningDistance = 5000;
+        private const int WinningDistance = 1000;
         public static int TickSpeed = 100;
         public static void RunGame()
         {
@@ -21,47 +21,36 @@ namespace CarRace2
             Console.ReadKey();
             while (raceOn)
             {
+                CheckWinners();
                 Console.Clear();
-                GameMenu();
+                Ui.TopPartMenu(carList);
+                Ui.MidPartMenu();               
                 Thread.Sleep(TickSpeed);
+                
             }
+            Ui.BotPartMenu();
         }
 
+        public static void CheckWinners()
+        {
+            int CarsThatHaveWon = 0;
+            foreach(Car car in carList)
+            {
+                if(car.HasWon)
+                {
+                    CarsThatHaveWon += 1;
+                }
+                
+            }
+            if (CarsThatHaveWon == 3)
+            {
+                StopTheRace();
+            }
+        }
         public static void StopTheRace()
         {
             raceOn = false;
-        }
-
-        public static void GameMenu()
-        {
-            Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine("Game Menu - Car Status:");
-            foreach (var car in carList)
-            {
-                if (car.Stopped)
-                {
-                    Console.ForegroundColor = ConsoleColor.Red;
-                }
-                else
-                {
-                    Console.ForegroundColor= ConsoleColor.Green;
-                }
-                Console.Write($"Car: {car.Name}, Distance Driven: {car.DistanceDriven}m, Speed: {car.Speed} Km/h, Broken: {car.Stopped} ");
-                if(car.HasWon == true)
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write(" WE HAVE A WINNER!!!");
-                    StopTheRace();
-                }
-                else if (car.Stopped)
-                {
-                    Console.ForegroundColor = ConsoleColor.DarkYellow;
-                    Console.Write(car.Problem);
-                }
-                Console.WriteLine("");
-            }
-
-        }
+        }   
 
         public static void InitCars()
         {
@@ -78,19 +67,10 @@ namespace CarRace2
         }
         static void GameTick(Car car)
         {
-            bool HasOtherCarWon = false;
 
-            while(!car.HasWon && !HasOtherCarWon)
+            while(raceOn && !car.HasWon)
             {
                 car.Seconds += 1;
-                foreach (Car otherCar in carList)
-                {
-                    if (otherCar.HasWon)
-                    {
-                        HasOtherCarWon = true;
-                    }
-
-                }
                 if (!car.Stopped)
                 {
                     if (car.Seconds % 10 == 0)
@@ -102,6 +82,7 @@ namespace CarRace2
                 if (car.DistanceDriven >= WinningDistance)
                 {
                     car.HasWon = true;
+                    Ui.AddWinner($"Time:{car.Seconds} | Name:{car.Name}");
                 }
                 Thread.Sleep(TickSpeed);
             }

@@ -40,25 +40,26 @@ namespace CarRace2
             {
                 case int n when (n >= 1 && n <= 2):
                     car.Problem = "Empty gastank";
+                    Ui.AddEvent($"TIME:{car.Seconds}s: {car.Name} has run out of gas");
                     EmptyGas(car);
                     break;
 
                 case int n when (n >= 3 && n <= 4): 
                     car.Problem = "Blown Tire";
+                    Ui.AddEvent($"TIME:{car.Seconds}s: {car.Name} has blown a tire");
                     BlownTire(car);
                     break;
 
                 case int n when (n >= 5 && n <= 9): 
                     car.Problem = "Bird hit the windshield";
+                    Ui.AddEvent($"TIME:{car.Seconds}s: A bird has hit {car.Name} window");
                     BirdHit(car);
                     break;
 
                 case int n when (n >= 10 && n <= 19): 
                     car.Problem = "Engine problems";
+                    Ui.AddEvent($"TIME:{car.Seconds}s: {car.Name} has got engine problems");
                     EngineProblem(car);
-                    break;
-                default:
-                    car.Problem = "";
                     break;
             }
         }

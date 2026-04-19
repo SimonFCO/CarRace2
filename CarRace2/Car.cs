@@ -12,7 +12,8 @@ namespace CarRace2
         public int Speed { get; set; } = 120;
         public bool Stopped { get; set; } = false;
         public int PauseTimer { get; set; } = 0;
-        public int DistanceDriven { get; set; } = 0;
+        public int Seconds { get; set; } = 0;
+        public double DistanceDriven { get; set; } = 0;
         public bool HasWon { get; set; } = false;
         public string Problem { get; set; } = "";
         public Car(string name)
@@ -38,7 +39,7 @@ namespace CarRace2
             Update();
             if (Stopped != true)
             {
-                DistanceDriven += Speed;
+                DistanceDriven += Speed * 1000 / 3600;
             }
         }
     }

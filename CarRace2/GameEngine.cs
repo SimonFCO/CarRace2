@@ -11,17 +11,25 @@ namespace CarRace2
     {
         public static List<Thread> threads = new List<Thread>();
         public static List<Car> carList = new List<Car>();
+        public static bool raceOn = true;
+        private const int WinningDistance = 5000;
+        public static int TickSpeed = 100;
         public static void RunGame()
         {
             InitCars();
             Console.WriteLine("Press any key to begin the race");
             Console.ReadKey();
-            while (true)
+            while (raceOn)
             {
                 Console.Clear();
                 GameMenu();
-                Thread.Sleep(1000);
+                Thread.Sleep(TickSpeed);
             }
+        }
+
+        public static void StopTheRace()
+        {
+            raceOn = false;
         }
 
         public static void GameMenu()
@@ -38,11 +46,12 @@ namespace CarRace2
                 {
                     Console.ForegroundColor= ConsoleColor.Green;
                 }
-                Console.Write($"Car: {car.Name}, Distance Driven: {car.DistanceDriven}, Speed: {car.Speed}, Broken: {car.Stopped} ");
+                Console.Write($"Car: {car.Name}, Distance Driven: {car.DistanceDriven}m, Speed: {car.Speed} Km/h, Broken: {car.Stopped} ");
                 if(car.HasWon == true)
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write(" WE HAVE A WINNER!!!");
+                    StopTheRace();
                 }
                 else if (car.Stopped)
                 {
@@ -51,6 +60,7 @@ namespace CarRace2
                 }
                 Console.WriteLine("");
             }
+
         }
 
         public static void InitCars()
@@ -66,22 +76,35 @@ namespace CarRace2
                 thread.Start();
             }
         }
-        static bool GameTick(Car car)
+        static void GameTick(Car car)
         {
-            while(!car.HasWon)
+            bool HasOtherCarWon = false;
+
+            while(!car.HasWon && !HasOtherCarWon)
             {
+                car.Seconds += 1;
+                foreach (Car otherCar in carList)
+                {
+                    if (otherCar.HasWon)
+                    {
+                        HasOtherCarWon = true;
+                    }
+
+                }
                 if (!car.Stopped)
                 {
-                    Events.ExecuteRandomEvent(car);
+                    if (car.Seconds % 10 == 0)
+                    {
+                        Events.ExecuteRandomEvent(car);
+                    }
                 }
                 car.Drive();
-                if (car.DistanceDriven >= 1000)
+                if (car.DistanceDriven >= WinningDistance)
                 {
                     car.HasWon = true;
                 }
-                Thread.Sleep(1000);
+                Thread.Sleep(TickSpeed);
             }
-            return true;
         }
     }
 }

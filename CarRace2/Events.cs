@@ -39,22 +39,22 @@ namespace CarRace2
             switch (random)
             {
                 case int n when (n >= 1 && n <= 2):
-                    car.Problem = "Slut på bensin";
+                    car.Problem = "Empty gastank";
                     EmptyGas(car);
                     break;
 
                 case int n when (n >= 3 && n <= 4): 
-                    car.Problem = "Punktering";
+                    car.Problem = "Blown Tire";
                     BlownTire(car);
                     break;
 
                 case int n when (n >= 5 && n <= 9): 
-                    car.Problem = "Fågel på vindrutan";
+                    car.Problem = "Bird hit the windshield";
                     BirdHit(car);
                     break;
 
                 case int n when (n >= 10 && n <= 19): 
-                    car.Problem = "Motorfel";
+                    car.Problem = "Engine problems";
                     EngineProblem(car);
                     break;
                 default:

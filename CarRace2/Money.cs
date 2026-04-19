@@ -62,18 +62,18 @@ namespace CarRace2
 
             BetSize = input;
             Console.WriteLine("Alright you choose to bet " + BetSize);
-            Thread.Sleep(2000);
         }
         public static void GamblingEnd()
         {
             Console.WriteLine("");
-            if (CarBet == Ui.Winners[0])
+            if (Ui.Winners[0].Contains(CarBet, StringComparison.OrdinalIgnoreCase))
             {
                 Console.WriteLine("Congrats you won " + BetSize * 2);
                 Balance += BetSize * 2;
                 Console.WriteLine("You now have: " + Balance);
                 BetSize = 0;
                 CarBet = "";
+                Console.ReadKey();
             }
             else
             {
@@ -86,7 +86,7 @@ namespace CarRace2
                 string answer = Console.ReadLine();
                 if (answer == "1")
                 {
-
+                    Console.Clear();
                 }
                 else
                 {

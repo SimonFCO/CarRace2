@@ -13,23 +13,24 @@ namespace CarRace2
         public static List<Car> carList = new List<Car>();
         public static bool raceOn = true;
         private const int WinningDistance = 1000;
-        public static int TickSpeed = 500;
+        public static int TickSpeed = 100;
 
         public static bool KeepPlaying = true;
         public static void RunGame()
         {
+            // FOR FUN
+            Money.InitGambling();
+            // END FOR FUN
+
             while (KeepPlaying)
             {
-                InitCars();
-
+                raceOn = true;
                 // FOR FUN
-
-                Money.InitGambling();
                 Money.GamblingStartUi();
-
-                // END FOR FUN
+                // END FOR FUN           
 
                 Console.WriteLine("Press any key to begin the race");
+                InitCars();
                 Console.ReadKey();
                 while (raceOn)
                 {
@@ -43,9 +44,10 @@ namespace CarRace2
                 Ui.BotPartMenu();
 
                 // FOR FUN (again..)
-
                 Money.GamblingEnd();
-
+                Ui.Winners.Clear();
+                Ui.Events.Clear();
+                carList.Clear();
                 // END FOR FUN (again..)
             }
 

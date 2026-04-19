@@ -14,21 +14,43 @@ namespace CarRace2
         public static bool raceOn = true;
         private const int WinningDistance = 1000;
         public static int TickSpeed = 100;
+
+        public static bool KeepPlaying = true;
         public static void RunGame()
         {
-            InitCars();
-            Console.WriteLine("Press any key to begin the race");
-            Console.ReadKey();
-            while (raceOn)
+            // FOR FUN
+            Money.InitGambling();
+            // END FOR FUN
+
+            while (KeepPlaying)
             {
-                CheckWinners();
-                Console.Clear();
-                Ui.TopPartMenu(carList);
-                Ui.MidPartMenu();               
-                Thread.Sleep(TickSpeed);
-                
+                raceOn = true;
+                // FOR FUN
+                Money.GamblingStartUi();
+                // END FOR FUN           
+
+                Console.WriteLine("Press any key to begin the race");
+                InitCars();
+                Console.ReadKey();
+                while (raceOn)
+                {
+                    CheckWinners();
+                    Console.Clear();
+                    Ui.TopPartMenu(carList);
+                    Ui.MidPartMenu();
+                    Thread.Sleep(TickSpeed);
+
+                }
+                Ui.BotPartMenu();
+
+                // FOR FUN (again..)
+                Money.GamblingEnd();
+                Ui.Winners.Clear();
+                Ui.Events.Clear();
+                carList.Clear();
+                // END FOR FUN (again..)
             }
-            Ui.BotPartMenu();
+
         }
 
         public static void CheckWinners()

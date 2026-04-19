@@ -13,6 +13,8 @@ namespace CarRace2
         public bool Stopped { get; set; } = false;
         public int PauseTimer { get; set; } = 0;
         public int DistanceDriven { get; set; } = 0;
+        public bool HasWon { get; set; } = false;
+        public string Problem { get; set; } = "";
         public Car(string name)
         {
             Name = name;
@@ -27,12 +29,17 @@ namespace CarRace2
             else
             {
                 Stopped = true;
+                PauseTimer -= 1;
             }
         }
 
         public void Drive()
         {
-            DistanceDriven += Speed;
+            Update();
+            if (Stopped != true)
+            {
+                DistanceDriven += Speed;
+            }
         }
     }
 }

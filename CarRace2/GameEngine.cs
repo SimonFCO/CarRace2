@@ -14,6 +14,8 @@ namespace CarRace2
         public static void RunGame()
         {
             InitCars();
+            Console.WriteLine("Press any key to begin the race");
+            Console.ReadKey();
             while (true)
             {
                 Console.Clear();
@@ -24,10 +26,30 @@ namespace CarRace2
 
         public static void GameMenu()
         {
+            Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("Game Menu - Car Status:");
             foreach (var car in carList)
             {
-                Console.WriteLine($"Car: {car.Name}, Distance Driven: {car.DistanceDriven}, Speed: {car.Speed}, Broken: {car.Stopped}");
+                if (car.Stopped)
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+                else
+                {
+                    Console.ForegroundColor= ConsoleColor.Green;
+                }
+                Console.Write($"Car: {car.Name}, Distance Driven: {car.DistanceDriven}, Speed: {car.Speed}, Broken: {car.Stopped} ");
+                if(car.HasWon == true)
+                {
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    Console.Write(" WE HAVE A WINNER!!!");
+                }
+                else if (car.Stopped)
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.Write(car.Problem);
+                }
+                Console.WriteLine("");
             }
         }
 
@@ -46,9 +68,17 @@ namespace CarRace2
         }
         static bool GameTick(Car car)
         {
-            while(car.DistanceDriven <= 1000)
+            while(!car.HasWon)
             {
+                if (!car.Stopped)
+                {
+                    Events.ExecuteRandomEvent(car);
+                }
                 car.Drive();
+                if (car.DistanceDriven >= 1000)
+                {
+                    car.HasWon = true;
+                }
                 Thread.Sleep(1000);
             }
             return true;

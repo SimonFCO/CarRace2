@@ -31,7 +31,7 @@ namespace CarRace2
         {
             car.Speed -= 1;
         }
-        private static void ExecuteRandomEvent(Car car)
+        public static void ExecuteRandomEvent(Car car)
         {
             Random rnd = new Random();
             int random = rnd.Next(1, 51);
@@ -39,27 +39,26 @@ namespace CarRace2
             switch (random)
             {
                 case int n when (n >= 1 && n <= 2):
-                    Console.WriteLine("Slut på bensin");
+                    car.Problem = "Slut på bensin";
                     EmptyGas(car);
                     break;
 
                 case int n when (n >= 3 && n <= 4): 
-                    Console.WriteLine("Punktering");
+                    car.Problem = "Punktering";
                     BlownTire(car);
                     break;
 
                 case int n when (n >= 5 && n <= 9): 
-                    Console.WriteLine("Fågel på vindrutan");
+                    car.Problem = "Fågel på vindrutan";
                     BirdHit(car);
                     break;
 
                 case int n when (n >= 10 && n <= 19): 
-                    Console.WriteLine("Motorfel");
+                    car.Problem = "Motorfel";
                     EngineProblem(car);
                     break;
-
                 default:
-                    Console.WriteLine("[LOG] No issue occurred.");
+                    car.Problem = "";
                     break;
             }
         }

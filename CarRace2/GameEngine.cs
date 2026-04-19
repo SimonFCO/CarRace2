@@ -13,22 +13,42 @@ namespace CarRace2
         public static List<Car> carList = new List<Car>();
         public static bool raceOn = true;
         private const int WinningDistance = 1000;
-        public static int TickSpeed = 100;
+        public static int TickSpeed = 500;
+
+        public static bool KeepPlaying = true;
         public static void RunGame()
         {
-            InitCars();
-            Console.WriteLine("Press any key to begin the race");
-            Console.ReadKey();
-            while (raceOn)
+            while (KeepPlaying)
             {
-                CheckWinners();
-                Console.Clear();
-                Ui.TopPartMenu(carList);
-                Ui.MidPartMenu();               
-                Thread.Sleep(TickSpeed);
-                
+                InitCars();
+
+                // FOR FUN
+
+                Money.InitGambling();
+                Money.GamblingStartUi();
+
+                // END FOR FUN
+
+                Console.WriteLine("Press any key to begin the race");
+                Console.ReadKey();
+                while (raceOn)
+                {
+                    CheckWinners();
+                    Console.Clear();
+                    Ui.TopPartMenu(carList);
+                    Ui.MidPartMenu();
+                    Thread.Sleep(TickSpeed);
+
+                }
+                Ui.BotPartMenu();
+
+                // FOR FUN (again..)
+
+                Money.GamblingEnd();
+
+                // END FOR FUN (again..)
             }
-            Ui.BotPartMenu();
+
         }
 
         public static void CheckWinners()

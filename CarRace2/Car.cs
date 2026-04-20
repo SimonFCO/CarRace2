@@ -9,7 +9,7 @@ namespace CarRace2
     internal class Car
     {
         public string Name { get; set; }
-        public int Speed { get; set; } = 120;
+        public double Speed { get; set; } = 120;
         public bool Stopped { get; set; } = false;
         public int PauseTimer { get; set; } = 0;
         public int Seconds { get; set; } = 0;
@@ -39,7 +39,7 @@ namespace CarRace2
             Update();
             if (!Stopped)
             {
-                DistanceDriven += Speed * 1000 / 3600;
+                DistanceDriven += (Speed * 1000) / 3600;
             }
         }
     }

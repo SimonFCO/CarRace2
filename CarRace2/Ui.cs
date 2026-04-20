@@ -28,11 +28,11 @@ namespace CarRace2
                 {
                     Console.ForegroundColor = ConsoleColor.Green;
                 }
-                Console.Write($"Car: {car.Name}, Distance Driven: {car.DistanceDriven}m, Speed: {car.Speed} Km/h, Broken: {car.Stopped} ");
+                Console.Write($"Car: {car.Name}, Distance Driven: {Math.Round(car.DistanceDriven, 2)}m, Speed: {car.Speed} Km/h, Broken: {car.Stopped} ");
                 if (car.HasWon == true)
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write(" WE HAVE A WINNER!!!");
+                    Console.Write(" Finished");
                 }
                 else if (car.Stopped)
                 {
@@ -47,7 +47,7 @@ namespace CarRace2
         }
         public static void MidPartMenu() // Central part showing all the 12 recent events
         {
-            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             lock (_eventLock)
             Console.WriteLine("Event Log:");
 
@@ -63,6 +63,7 @@ namespace CarRace2
                 }
             }
             Console.WriteLine("--------------------------------------------------------------------\n\n");
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
         // Bottom part that runs after the race is doen showing the winners 
@@ -71,7 +72,7 @@ namespace CarRace2
             Console.ForegroundColor = ConsoleColor.Cyan;
             lock (_eventLock)
 
-            Console.WriteLine("Event Log:");
+            Console.WriteLine("Game Over!:");
             Console.WriteLine($"First Place  | {Winners[0]}");
             Console.WriteLine($"Second Place | {Winners[1]}");
             Console.WriteLine($"Third Place  | {Winners[2]}");

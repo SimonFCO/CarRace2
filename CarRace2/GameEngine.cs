@@ -11,9 +11,9 @@ namespace CarRace2
     {
         public static List<Thread> threads = new List<Thread>();
         public static List<Car> carList = new List<Car>();
-        public static bool raceOn = true;
-        private const int WinningDistance = 1000;
-        public static int TickSpeed = 100;
+        public static bool raceOn = true;   
+        private const int WinningDistance = 5000;
+        public static int TickSpeed = 200;
 
         public static bool KeepPlaying = true;
         public static void RunGame()
@@ -29,19 +29,25 @@ namespace CarRace2
                 Money.GamblingStartUi();
                 // END FOR FUN           
 
-                Console.WriteLine("Press any key to begin the race");
-                InitCars();
+                Console.WriteLine("Press any key to begin the race");                
                 Console.ReadKey();
+                Console.Clear();
+                InitCars();
+                Update();
                 while (raceOn)
                 {
-                    CheckWinners();
-                    Console.Clear();
-                    Ui.TopPartMenu(carList);
-                    Ui.MidPartMenu();
-                    Thread.Sleep(TickSpeed);
-
+                    Console.WriteLine("Write Status or press any key for a update");
+                    string answer = "";
+                    answer = Console.ReadLine();
+                    if (answer == "Status" || answer == "status")
+                    {
+                        Update();
+                    }
+                    else if(string.IsNullOrEmpty(answer))
+                    {
+                        Update();
+                    }
                 }
-                Ui.BotPartMenu();
 
                 // FOR FUN (again..)
                 Money.GamblingEnd();
@@ -51,6 +57,18 @@ namespace CarRace2
                 // END FOR FUN (again..)
             }
 
+        }
+
+        public static void Update()
+        {
+            Console.Clear();
+            Ui.TopPartMenu(carList);
+            Ui.MidPartMenu();
+            Thread.Sleep(TickSpeed);
+            if (!raceOn)
+            {
+                Ui.BotPartMenu();
+            }
         }
 
         public static void CheckWinners()
@@ -67,6 +85,12 @@ namespace CarRace2
             if (CarsThatHaveWon == 3)
             {
                 StopTheRace();
+                Console.Clear();
+            }
+            if (!raceOn)
+            {
+                Console.Clear();
+                Ui.BotPartMenu();
             }
         }
         public static void StopTheRace()
@@ -108,6 +132,7 @@ namespace CarRace2
                 }
                 Thread.Sleep(TickSpeed);
             }
+            CheckWinners();
         }
     }
 }

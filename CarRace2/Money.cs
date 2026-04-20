@@ -21,6 +21,7 @@ namespace CarRace2
         {
             Console.Clear();
             bool carPicked = false;
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             Console.WriteLine("Hello Sir you have: "+Balance);
             Console.WriteLine("What car do you want to bet on?");
             Console.WriteLine("1, Toyota");
@@ -52,6 +53,7 @@ namespace CarRace2
                 {
                     Console.WriteLine("Write a real number");
                 }
+
             }
 
             int input;
@@ -62,10 +64,12 @@ namespace CarRace2
 
             BetSize = input;
             Console.WriteLine("Alright you choose to bet " + BetSize);
+            Console.ForegroundColor = ConsoleColor.White;
         }
         public static void GamblingEnd()
         {
             Console.WriteLine("");
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
             if (Ui.Winners[0].Contains(CarBet, StringComparison.OrdinalIgnoreCase))
             {
                 Console.WriteLine("Congrats you won " + BetSize * 2);
@@ -93,6 +97,7 @@ namespace CarRace2
                     GameEngine.KeepPlaying = false;
                 }
             }
+            Console.ForegroundColor = ConsoleColor.White;
         }
 
     }

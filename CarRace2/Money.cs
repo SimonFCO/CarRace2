@@ -77,6 +77,9 @@ namespace CarRace2
                 Console.WriteLine("You now have: " + Balance);
                 BetSize = 0;
                 CarBet = "";
+                Console.WriteLine("Do you want to play again?");
+                Console.WriteLine("1, Continue");
+                Console.WriteLine("2, End");
                 Console.ReadKey();
             }
             else

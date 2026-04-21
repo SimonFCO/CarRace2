@@ -13,7 +13,7 @@ namespace CarRace2
         public static List<Car> carList = new List<Car>();
         public static bool raceOn = true;   
         private const int WinningDistance = 5000;
-        public static int TickSpeed = 200;
+        public static int TickSpeed = 20;
 
         public static bool KeepPlaying = true;
         public static void RunGame()
@@ -110,6 +110,8 @@ namespace CarRace2
                 threads.Add(thread);
                 thread.Start();
             }
+
+            Console.WriteLine("The race has officially started!");
         }
         static void GameTick(Car car)
         {
@@ -129,6 +131,19 @@ namespace CarRace2
                 {
                     car.HasWon = true;
                     Ui.AddWinner($"Time:{car.Seconds} | Name:{car.Name}");
+
+                    if (Ui.Winners.Count == 1)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine($"TIME:{DateTime.Now.ToString("hh\\:mm\\:ss")}: {car.Name} HAS CROSSED THE FINISH LINE AND WON THE RACE!");
+                        Ui.AddEvent($"TIME:{DateTime.Now.ToString("hh\\:mm\\:ss")}: {car.Name} HAS CROSSED THE FINISH LINE AND WON THE RACE!");
+                    }
+                    else
+                    {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
+                        Console.WriteLine($"TIME:{DateTime.Now.ToString("hh\\:mm\\:ss")}: {car.Name} has crossed the finish line!");
+                        Ui.AddEvent($"TIME:{DateTime.Now.ToString("hh\\:mm\\:ss")}: {car.Name} has crossed the finish line!");
+                    }
                 }
                 Thread.Sleep(TickSpeed);
             }

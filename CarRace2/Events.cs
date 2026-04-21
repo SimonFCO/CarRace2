@@ -34,10 +34,10 @@ namespace CarRace2
         public static void ExecuteRandomEvent(Car car)
         {
             Random rnd = new Random();
-            int random = rnd.Next(1, 51);
+            int random = Random.Shared.Next(1, 51);
             switch (random)
             {
-                case int n when (n >= 1 && n <= 2):
+                case int n when (n == 1):
                     car.Problem = "Empty gastank";
                     Console.ForegroundColor = ConsoleColor.DarkRed;
                     Ui.AddEvent($"TIME:{DateTime.Now.ToString("hh\\:mm\\:ss")}: {car.Name} has run out of gas");
